@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>koneat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app-shell">
+
+  <!-- =======================================================================
+       0. AUTENTICAÇÃO: LOGIN | CRIE SUA CONTA | RECUPERE SEU ACESSO
+       ======================================================================= -->
+  <section id="screen-auth" class="auth-screen active bg-black text-white no-scrollbar">
+    <!-- Vista 0A: Login -->
+    <div id="auth-view-login" class="auth-view relative flex-1 flex flex-col justify-between px-6 pt-14 pb-5 overflow-hidden">
+      <div class="auth-glow-tl" aria-hidden="true"></div>
+      <div class="auth-glow-br" aria-hidden="true"></div>
+
+      <div class="relative z-10 w-full max-w-[380px] mx-auto flex-1 flex flex-col justify-center">
+        <div class="text-center mb-9">
+          <h1 class="text-[28px] font-black tracking-[0.14em] text-white uppercase leading-none">KONEAT</h1>
+          <p class="text-[11px] font-medium tracking-[0.26em] text-[#9CA3AF] uppercase mt-2">O COMEÇO</p>
+        </div>
+
+        <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div>
+            <label for="login-email" class="block text-[13px] font-semibold text-white mb-2">E-mail</label>
+            <input id="login-email" type="email" autocomplete="email" placeholder="Digite seu e-mail."
+              class="auth-input w-full h-[52px] rounded-2xl bg-transparent border border-white/25 focus:border-white/75 px-4 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+          </div>
+
+          <div>
+            <label for="login-password" class="block text-[13px] font-semibold text-white mb-2">Senha</label>
+            <div class="relative flex items-center">
+              <input id="login-password" type="password" autocomplete="current-password" placeholder="Digite sua senha."
+                class="auth-input w-full h-[52px] rounded-2xl bg-transparent border border-white/25 focus:border-white/75 pl-4 pr-12 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+              <button type="button" onclick="togglePasswordVisibility('login-password', this)" aria-label="Mostrar ou ocultar senha"
+                class="absolute right-3.5 text-[#9CA3AF] hover:text-white transition p-1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full h-[50px] rounded-full bg-white hover:bg-zinc-100 active:scale-[0.99] text-black text-[13px] font-extrabold tracking-[0.14em] uppercase flex items-center justify-center gap-2.5 transition">
+              <span>ENTRAR</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="my-5 flex items-center gap-4">
+          <div class="flex-1 h-[1px] bg-white/15"></div>
+          <span class="text-[12px] text-[#9CA3AF] font-medium">Ou</span>
+          <div class="flex-1 h-[1px] bg-white/15"></div>
+        </div>
+
+        <button type="button" onclick="handleGoogleAuth()" class="w-full h-[50px] rounded-full bg-transparent border border-white/25 hover:border-white/55 active:scale-[0.99] text-white text-[14px] font-medium flex items-center justify-center gap-3 transition">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.5-1.14 2.77-2.4 3.62v3.01h3.88c2.27-2.09 3.54-5.17 3.54-8.87z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.01c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.26v3.1C3.23 21.3 7.31 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.28c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.62H1.26C.46 8.21 0 10.05 0 12s.46 3.79 1.26 5.38l4.02-3.1z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.23 2.7 1.26 6.62l4.02 3.1c.95-2.85 3.6-4.97 6.72-4.97z"/>
+          </svg>
+          <span class="h-4 w-[1px] bg-white/20"></span>
+          <span>Continuar com o Google</span>
+        </button>
+
+        <div class="mt-6 flex items-center justify-center gap-3 text-[13px] text-[#A1A1AA]">
+          <button type="button" onclick="showAuthView('register')" class="underline underline-offset-4 hover:text-white transition">
+            Criar nova conta
+          </button>
+          <span class="text-[#71717A]">•</span>
+          <button type="button" onclick="showAuthView('recover')" class="underline underline-offset-4 hover:text-white transition">
+            Recuperar acesso
+          </button>
+        </div>
+      </div>
+
+      <footer class="relative z-10 text-center pt-4">
+        <p class="text-[12px] text-[#9CA3AF]">© 2027 Systendance.</p>
+      </footer>
+    </div>
+
+    <!-- Vista 0B: Crie sua conta -->
+    <div id="auth-view-register" class="auth-view hidden flex-1 flex flex-col px-6 pt-4 pb-8">
+      <header class="h-12 flex items-center shrink-0">
+        <button type="button" onclick="showAuthView('login')" aria-label="Voltar" class="p-1.5 -ml-1.5 rounded-full text-white hover:bg-white/10 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </header>
+
+      <div class="w-full max-w-[380px] mx-auto flex-1 flex flex-col justify-center">
+        <h2 class="text-[22px] font-extrabold tracking-[0.06em] text-white text-center uppercase mb-7">CRIE SUA CONTA</h2>
+
+        <form onsubmit="handleRegisterSubmit(event)" class="space-y-4">
+          <div>
+            <label for="reg-handle" class="block text-[13px] font-semibold text-white mb-2">Nome de usuário</label>
+            <input id="reg-handle" type="text" autocomplete="username" placeholder="Digite seu @usuário"
+              class="auth-input w-full h-[50px] rounded-2xl bg-transparent border border-white/40 focus:border-white px-4 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+          </div>
+
+          <div>
+            <label for="reg-email" class="block text-[13px] font-semibold text-white mb-2">E-mail</label>
+            <input id="reg-email" type="email" autocomplete="email" placeholder="Digite seu e-mail"
+              class="auth-input w-full h-[50px] rounded-2xl bg-transparent border border-white/40 focus:border-white px-4 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+          </div>
+
+          <div>
+            <label for="reg-password" class="block text-[13px] font-semibold text-white mb-2">Senha</label>
+            <div class="relative flex items-center">
+              <input id="reg-password" type="password" autocomplete="new-password" placeholder="Digite sua senha"
+                class="auth-input w-full h-[50px] rounded-2xl bg-transparent border border-white/40 focus:border-white pl-4 pr-12 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+              <button type="button" onclick="togglePasswordVisibility('reg-password', this)" aria-label="Mostrar ou ocultar senha"
+                class="absolute right-3.5 text-[#A1A1AA] hover:text-white transition p-1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <p class="text-[12px] text-[#A1A1AA] text-center mb-3">Um código de verificação será enviado para seu e-mail.</p>
+            <div id="reg-code-boxes" class="grid grid-cols-6 gap-2">
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 1" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 2" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 3" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 4" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 5" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 6" class="code-box h-[46px] rounded-xl bg-transparent border border-white/45 focus:border-white text-center text-base font-bold text-white outline-none" />
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full h-[50px] rounded-full bg-white hover:bg-zinc-100 active:scale-[0.99] text-black text-[13px] font-extrabold tracking-[0.14em] uppercase flex items-center justify-center gap-2.5 transition">
+              <span>AVANÇAR</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-5 text-center">
+          <button type="button" onclick="showAuthView('login')" class="text-[13px] text-[#A1A1AA] underline underline-offset-4 hover:text-white transition">
+            Voltar ao Login
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista 0C: Recupere seu acesso -->
+    <div id="auth-view-recover" class="auth-view hidden flex-1 flex flex-col px-6 pt-4 pb-8">
+      <header class="h-12 flex items-center shrink-0">
+        <button type="button" onclick="showAuthView('login')" aria-label="Voltar" class="p-1.5 -ml-1.5 rounded-full text-white hover:bg-white/10 transition">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </header>
+
+      <div class="w-full max-w-[380px] mx-auto flex-1 flex flex-col justify-center">
+        <h2 class="text-[22px] font-extrabold tracking-[0.05em] text-white text-center uppercase mb-8">RECUPERE SEU ACESSO</h2>
+
+        <form onsubmit="handleRecoverSubmit(event)" class="space-y-4">
+          <div>
+            <label for="rec-email" class="block text-[13px] font-semibold text-white mb-2">E-mail da conta</label>
+            <input id="rec-email" type="email" autocomplete="email" placeholder="Digite seu e-mail"
+              class="auth-input w-full h-[50px] rounded-2xl bg-transparent border border-white/50 focus:border-white px-4 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+          </div>
+
+          <div>
+            <label for="rec-password" class="block text-[13px] font-semibold text-white mb-2">Nova senha</label>
+            <div class="relative flex items-center">
+              <input id="rec-password" type="password" autocomplete="new-password" placeholder="Digite sua nova senha"
+                class="auth-input w-full h-[50px] rounded-2xl bg-transparent border border-white/50 focus:border-white pl-4 pr-12 text-[14px] text-white placeholder-[#71717A] outline-none transition" />
+              <button type="button" onclick="togglePasswordVisibility('rec-password', this)" aria-label="Mostrar ou ocultar senha"
+                class="absolute right-3.5 text-[#A1A1AA] hover:text-white transition p-1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <p class="text-[12px] text-[#A1A1AA] text-center mb-3">Um código de recuperação será enviado para seu e-mail.</p>
+            <div id="rec-code-boxes" class="grid grid-cols-6 gap-2">
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 1" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 2" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 3" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 4" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 5" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Dígito 6" class="code-box h-[46px] rounded-xl bg-transparent border border-white/50 focus:border-white text-center text-base font-bold text-white outline-none" />
+            </div>
+          </div>
+
+          <div class="pt-3">
+            <button type="submit" class="w-full h-[50px] rounded-full bg-white hover:bg-zinc-100 active:scale-[0.99] text-black text-[13px] font-extrabold tracking-[0.14em] uppercase flex items-center justify-center gap-2.5 transition">
+              <span>AVANÇAR</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-5 text-center">
+          <button type="button" onclick="showAuthView('login')" class="text-[13px] text-[#A1A1AA] underline underline-offset-4 hover:text-white transition">
+            Voltar ao Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       1. TELA HOME (Fundo Branco #FFFFFF)
+       ======================================================================= -->
+  <section id="screen-home" class="screen bg-white text-black no-scrollbar">
+    <header class="sticky top-0 z-30 bg-white px-4 pt-3 pb-2 flex items-center justify-between">
+      <span class="text-[23px] font-extrabold tracking-tight text-black leading-none">koneat</span>
+      <div class="flex items-center gap-4 text-black">
+        <button type="button" onclick="toggleHomeSearch()" class="p-1.5 rounded-full hover:bg-zinc-100 active:scale-90 transition" aria-label="Buscar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7.5"></circle>
+            <line x1="20.5" y1="20.5" x2="16.35" y2="16.35"></line>
+          </svg>
+        </button>
+        <button type="button" onclick="openToast('Nenhuma notificação nova no momento')" class="p-1.5 rounded-full hover:bg-zinc-100 active:scale-90 transition relative" aria-label="Notificações">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="home-search-bar" class="hidden px-4 pb-2 bg-white">
+      <input id="home-search-input" type="text" oninput="renderHome()" placeholder="Buscar posts ou @usuários..." class="w-full bg-[#F4F6F9] text-black text-xs px-3.5 py-2 rounded-full outline-none border border-zinc-200 focus:border-black" />
+    </div>
+
+    <div class="px-4 border-b border-[#EFEFEF] flex items-center gap-6 bg-white sticky top-[46px] z-20">
+      <button type="button" onclick="setHomeTab('pra-voce')" id="htab-pra-voce" class="py-2.5 text-[14px] font-bold text-black border-b-[2.5px] border-black transition">
+        pra você
+      </button>
+      <button type="button" onclick="setHomeTab('seguindo')" id="htab-seguindo" class="py-2.5 text-[14px] font-semibold text-[#9CA3AF] border-b-[2.5px] border-transparent hover:text-black transition">
+        seguindo
+      </button>
+      <button type="button" onclick="setHomeTab('explorar')" id="htab-explorar" class="py-2.5 text-[14px] font-semibold text-[#9CA3AF] border-b-[2.5px] border-transparent hover:text-black transition">
+        explorar
+      </button>
+    </div>
+
+    <div class="px-4 pt-3.5 pb-2 bg-white">
+      <div id="stories-container" class="flex items-start gap-3.5 overflow-x-auto no-scrollbar"></div>
+    </div>
+
+    <main id="feed-container" class="flex-1 flex flex-col"></main>
+  </section>
+
+  <!-- =======================================================================
+       2. TELA PLUS / CRIAR (Tema Escuro #000000)
+       ======================================================================= -->
+  <section id="screen-create" class="screen bg-black text-white no-scrollbar">
+    <header class="px-4 h-14 flex items-center justify-between bg-black shrink-0 border-b border-white/[0.08]">
+      <button type="button" onclick="closeCreateScreen()" class="w-9 h-9 flex items-center justify-center text-white hover:opacity-75 transition" aria-label="Fechar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="flex items-center gap-6 h-full">
+        <button type="button" data-mode="POST" onclick="setCreateMode('POST')" class="create-mode-btn h-full flex items-center text-[13px] font-bold tracking-wider text-white border-b-2 border-white transition">
+          POST
+        </button>
+        <button type="button" data-mode="STORY" onclick="setCreateMode('STORY')" class="create-mode-btn h-full flex items-center text-[13px] font-bold tracking-wider text-[#71717A] border-b-2 border-transparent hover:text-white transition">
+          STORY
+        </button>
+        <button type="button" data-mode="VIRAL" onclick="setCreateMode('VIRAL')" class="create-mode-btn h-full flex items-center text-[13px] font-bold tracking-wider text-[#71717A] border-b-2 border-transparent hover:text-white transition">
+          VIRAL
+        </button>
+      </div>
+
+      <button type="button" onclick="togglePreviewAspect()" class="w-9 h-9 flex items-center justify-center text-white hover:opacity-75 transition" title="Alternar enquadramento">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2.5"></rect>
+          <line x1="9" y1="4" x2="9" y2="20"></line>
+        </svg>
+      </button>
+    </header>
+
+    <div class="px-4 py-3 flex items-center justify-between shrink-0">
+      <button type="button" onclick="triggerGalleryPicker()" class="flex items-center gap-1.5 text-[15px] font-bold text-white active:opacity-70 transition">
+        <span id="gallery-label">Galeria</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
+      <button type="button" id="btn-publish" onclick="handleCreateNextStep()" class="px-4 py-1.5 rounded-full border border-white/80 hover:bg-white hover:text-black active:scale-95 text-white text-[13px] font-semibold flex items-center gap-1 transition">
+        <span id="btn-publish-label">Avançar</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <input type="file" id="media-file-input" accept="image/*,video/*" class="hidden" onchange="handleMediaFileSelect(event)" />
+    </div>
+
+    <div class="flex-1 relative flex flex-col items-center justify-center px-6 overflow-hidden">
+      <div id="create-empty-canvas" onclick="triggerGalleryPicker()" class="flex flex-col items-center justify-center text-center cursor-pointer py-12 px-6">
+        <div class="text-[42px] font-black tracking-tighter text-[#6E6E73] leading-none mb-2 select-none">
+          K<span class="text-[#6E6E73]">.</span>
+        </div>
+        <p id="create-center-hint" class="text-[14px] font-medium text-[#71717A]">
+          Adicionar Imagem ou Vídeo Feed.
+        </p>
+      </div>
+
+      <div id="create-selected-stage" class="hidden w-full h-full flex flex-col justify-between py-2">
+        <div id="create-media-preview-wrap" class="relative w-full flex-1 max-h-[58dvh] rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 flex items-center justify-center">
+          <img id="create-preview-img" class="hidden w-full h-full object-contain" alt="Preview" />
+          <video id="create-preview-video" class="hidden w-full h-full object-contain" controls playsinline muted></video>
+          <button type="button" onclick="clearSelectedMedia()" class="absolute top-3 right-3 bg-black/75 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">
+            Trocar
+          </button>
+        </div>
+
+        <div id="create-caption-wrap" class="w-full pt-3 pb-2">
+          <input id="create-caption" type="text" placeholder="Escreva uma descrição..." class="w-full bg-white/[0.09] border border-white/15 focus:border-white/50 rounded-full px-4 py-2.5 text-xs text-white placeholder-zinc-400 outline-none" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       3. TELA VÍDEO / VIRAL START (Fundo Preto #000000 + Folhinha Decisões)
+       ======================================================================= -->
+  <section id="screen-reels" class="screen bg-black text-white no-scrollbar relative">
+    <header class="sticky top-0 z-30 bg-black px-4 h-14 flex items-center justify-between shrink-0">
+      <span class="text-[17px] font-extrabold tracking-wide text-white uppercase">VIRAL START</span>
+      <div class="flex items-center gap-4 text-white relative">
+        <button type="button" onclick="openToast('Busca de vídeos virais')" class="p-1.5 rounded-full hover:bg-white/10 transition" aria-label="Buscar Vídeos">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7.5"></circle>
+            <line x1="20.5" y1="20.5" x2="16.35" y2="16.35"></line>
+          </svg>
+        </button>
+
+        <button type="button" id="reels-menu-btn" onclick="toggleViralDecisionsSheet(event)" class="p-1.5 rounded-full hover:bg-white/10 transition" aria-label="Decisões">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
+            <line x1="4" y1="6" x2="20" y2="6"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="18" x2="20" y2="18"></line>
+          </svg>
+        </button>
+
+        <div id="viral-decisions-sheet" class="hidden animate-pop-menu fixed top-[54px] right-[max(12px,calc(50%-228px))] w-[238px] bg-white text-black rounded-[20px] shadow-[0_14px_40px_rgba(0,0,0,0.55)] overflow-hidden z-50" onclick="event.stopPropagation()">
+          <div class="px-4 py-3.5 flex items-center gap-3 border-b border-zinc-200/80">
+            <button type="button" onclick="closeViralDecisionsSheet()" class="p-1 -ml-1 rounded-full hover:bg-zinc-100 active:scale-90 transition text-black" aria-label="Voltar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <span class="text-[16px] font-bold text-[#111111]">Decisões</span>
+          </div>
+
+          <div class="py-1.5">
+            <button type="button" onclick="handleViralDecision('not-interested')" class="w-full px-4 py-3 flex items-center gap-3.5 hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                <circle cx="12" cy="12" r="9.5"></circle>
+                <line x1="5.3" y1="18.7" x2="18.7" y2="5.3"></line>
+              </svg>
+              <span class="text-[15px] font-medium text-[#18181B]">Não tenho interesse</span>
+            </button>
+
+            <button type="button" onclick="handleViralDecision('report')" class="w-full px-4 py-3 flex items-center gap-3.5 hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+              <span class="text-[15px] font-medium text-[#18181B]">Denunciar</span>
+            </button>
+
+            <button type="button" onclick="handleViralDecision('block')" class="w-full px-4 py-3 flex items-center gap-3.5 hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                <circle cx="12" cy="12" r="9.5"></circle>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+              <span class="text-[15px] font-medium text-[#18181B]">Bloquear</span>
+            </button>
+          </div>
+
+          <div class="px-4 py-2.5 border-t border-zinc-100 bg-zinc-50/50">
+            <p class="text-[12px] font-medium text-[#6B7280]">Koneat start • 1.1.4</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="viral-decisions-backdrop" class="hidden fixed inset-0 z-20" onclick="closeViralDecisionsSheet()"></div>
+
+    <div id="reels-feed" class="no-scrollbar"></div>
+  </section>
+
+  <!-- =======================================================================
+       4. TELA PERFIL (Fundo Branco #FFFFFF)
+       ======================================================================= -->
+  <section id="screen-profile" class="screen bg-white text-black no-scrollbar relative">
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-black/[0.08] px-4 h-12 flex items-center justify-between">
+      <span id="profile-header-handle" class="text-sm font-bold text-black opacity-0 transition-opacity">@usuario</span>
+      <div class="flex items-center gap-1.5 relative">
+        <button type="button" onclick="openToast('Mensagens diretas em breve')" class="p-1.5 rounded-full hover:bg-zinc-100 transition" aria-label="Mensagens">
+          <svg width="24" height="22" viewBox="0 0 32 28" aria-hidden="true">
+            <path d="M15.8 2C7.9 2 2 6.6 2 12.5c0 4.8 4.1 8.7 10 10l7.7 3.2-.8-4.1c6.8-.9 11.1-4.3 11.1-9.1C30 6.7 24.1 2 15.8 2Z" fill="#929297"/>
+            <circle cx="10" cy="12.5" r="1.65" fill="#fff"/>
+            <circle cx="16" cy="12.5" r="1.65" fill="#fff"/>
+            <circle cx="22" cy="12.5" r="1.65" fill="#fff"/>
+          </svg>
+        </button>
+
+        <button type="button" id="profile-dots-btn" onclick="toggleProfileDotsMenu(event)" class="p-1.5 rounded-full hover:bg-zinc-100 transition" aria-label="Mais opções">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#000000">
+            <circle cx="12" cy="5" r="1.8"></circle>
+            <circle cx="12" cy="12" r="1.8"></circle>
+            <circle cx="12" cy="19" r="1.8"></circle>
+          </svg>
+        </button>
+
+        <div id="profile-dots-popover" class="hidden animate-pop-menu absolute top-11 right-0 w-[220px] bg-white rounded-[22px] shadow-[0_12px_36px_rgba(0,0,0,0.14)] border border-zinc-100 py-2.5 px-2 z-50" onclick="event.stopPropagation()">
+          <button type="button" onclick="closeProfileDotsMenu(); openSettingsModal();" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span class="text-[15px] font-medium text-zinc-900">Configurações</span>
+          </button>
+
+          <button type="button" onclick="closeProfileDotsMenu(); openInfoSheet('Privacidade');" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span class="text-[15px] font-medium text-zinc-900">Privacidade</span>
+          </button>
+
+          <button type="button" onclick="closeProfileDotsMenu(); openInfoSheet('Termos');" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="13" y2="17"></line>
+            </svg>
+            <span class="text-[15px] font-medium text-zinc-900">Termos</span>
+          </button>
+
+          <button type="button" onclick="closeProfileDotsMenu(); logoutToAuth();" class="w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl hover:bg-zinc-100 active:bg-zinc-200/70 transition text-left border-t border-zinc-100 mt-1">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span class="text-[15px] font-medium text-[#DC2626]">Sair</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="profile-dots-backdrop" class="hidden fixed inset-0 z-20" onclick="closeProfileDotsMenu()"></div>
+
+    <div class="px-5 pt-[22px]">
+      <div class="flex items-center gap-6">
+        <div class="relative shrink-0 cursor-pointer" onclick="triggerAvatarUpload()">
+          <div id="profile-avatar-box" class="w-[84px] h-[84px] rounded-full bg-[#F1F3F5] flex items-center justify-center overflow-hidden">
+            <svg id="profile-default-silhouette" class="w-full h-full" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+              <circle cx="50" cy="41" r="14.5" fill="#8E959E"></circle>
+              <path d="M12 100C13 75 28 62 50 62C72 62 87 75 88 100Z" fill="#8E959E"></path>
+            </svg>
+            <img id="profile-custom-img" src="" alt="Foto de perfil" class="hidden w-full h-full object-cover" />
+          </div>
+          <div class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-black border-2 border-white flex items-center justify-center text-white shadow-xs">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <input type="file" id="avatar-file-input" accept="image/*" class="hidden" onchange="handleAvatarFileChange(event)" />
+        </div>
+
+        <div class="flex-1 grid grid-cols-3 text-center">
+          <div>
+            <div id="stat-posts-count" class="text-[17px] font-bold text-black leading-tight">0</div>
+            <div class="text-[12px] text-[#4B5563] mt-0.5">posts</div>
+          </div>
+          <div>
+            <div id="stat-followers-count" class="text-[17px] font-bold text-black leading-tight">0</div>
+            <div class="text-[12px] text-[#4B5563] mt-0.5">seguidores</div>
+          </div>
+          <div>
+            <div id="stat-following-count" class="text-[17px] font-bold text-black leading-tight">0</div>
+            <div class="text-[12px] text-[#4B5563] mt-0.5">seguindo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3.5">
+        <p id="profile-name-display" class="hidden text-[13px] font-bold text-black"></p>
+        <p id="profile-bio-display" class="hidden text-[13px] text-black leading-snug"></p>
+      </div>
+
+      <div class="mt-[22px] grid grid-cols-2 gap-2.5">
+        <button type="button" onclick="openEditProfileModal()" class="bg-[#EFEFEF] hover:bg-[#E4E4E7] active:scale-[0.98] text-black font-bold text-[13px] py-1.5 rounded-lg transition">
+          Editar perfil
+        </button>
+        <button type="button" onclick="openShareSheet()" class="bg-[#EFEFEF] hover:bg-[#E4E4E7] active:scale-[0.98] text-black font-bold text-[13px] py-1.5 rounded-lg transition">
+          Compartilhar perfil
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-3 border-b border-[#EFEFEF]">
+      <button type="button" onclick="setProfileTab('todos')" id="ptab-todos" class="py-2.5 flex flex-col items-center gap-1 border-b-2 border-black text-black transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+        </svg>
+        <span class="text-[12px] font-bold">Todos</span>
+      </button>
+
+      <button type="button" onclick="setProfileTab('reposts')" id="ptab-reposts" class="py-2.5 flex flex-col items-center gap-1 border-b-2 border-transparent text-[#8E8E93] hover:text-black transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="17 1 21 5 17 9"></polyline>
+          <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+          <polyline points="7 23 3 19 7 15"></polyline>
+          <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+        </svg>
+        <span class="text-[12px] font-semibold">Reposts</span>
+      </button>
+
+      <button type="button" onclick="setProfileTab('marcacoes')" id="ptab-marcacoes" class="py-2.5 flex flex-col items-center gap-1 border-b-2 border-transparent text-[#8E8E93] hover:text-black transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3l2-2h4l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"></path>
+          <circle cx="12" cy="11" r="2.5"></circle>
+          <path d="M8.5 17c.5-2 2-3 3.5-3s3 1 3.5 3"></path>
+        </svg>
+        <span class="text-[12px] font-semibold">Marcações</span>
+      </button>
+    </div>
+
+    <div id="profile-content-area" class="flex-1 flex flex-col"></div>
+  </section>
+
+  <!-- =======================================================================
+       5. BARRA DE NAVEGAÇÃO INFERIOR ADAPTATIVA (BottomNav)
+       ======================================================================= -->
+  <nav id="bottom-nav" class="nav theme-light hidden" aria-label="Navegação Principal">
+    <button type="button" id="nav-home" onclick="go('home')" aria-label="Home">
+      <svg id="icon-home" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.8 L21 10.8 V20.5 H14.8 V14.6 H9.2 V20.5 H3 V10.8 Z"></path>
+      </svg>
+    </button>
+
+    <button type="button" id="nav-create" onclick="openCreateFromNavPlus()" aria-label="Criar">
+      <svg id="icon-create" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="2" fill="none"></rect>
+        <line x1="12" y1="8" x2="12" y2="16" stroke="#000000" stroke-width="2" stroke-linecap="round"></line>
+        <line x1="8" y1="12" x2="16" y2="12" stroke="#000000" stroke-width="2" stroke-linecap="round"></line>
+      </svg>
+    </button>
+
+    <button type="button" id="nav-reels" onclick="go('reels')" aria-label="Viral Start">
+      <svg id="icon-reels" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="#000000" stroke-width="2" fill="none"></rect>
+        <polygon points="10 8.5 16 12 10 15.5 10 8.5" stroke="#000000" stroke-width="1.9" stroke-linejoin="round" fill="none"></polygon>
+      </svg>
+    </button>
+
+    <button type="button" id="nav-profile" onclick="go('profile')" aria-label="Perfil">
+      <div id="nav-profile-icon-wrap" class="w-7 h-7 rounded-full flex items-center justify-center overflow-hidden">
+        <svg id="icon-profile-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9.5"></circle>
+          <circle cx="12" cy="9.5" r="3"></circle>
+          <path d="M6.8 18.8c1.1-2.2 3-3.3 5.2-3.3s4.1 1.1 5.2 3.3"></path>
+        </svg>
+        <img id="nav-profile-img" src="" alt="Perfil" class="hidden w-full h-full object-cover rounded-full border border-black/20" />
+      </div>
+    </button>
+  </nav>
+
+  <!-- =======================================================================
+       6. TELA SOBREPOSTA: CONFIGURAÇÕES
+       ======================================================================= -->
+  <div id="settings-modal" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[70] bg-[#F7F8FA] text-black flex flex-col overflow-hidden">
+    <header class="px-5 h-16 flex items-center justify-between bg-[#F7F8FA] shrink-0">
+      <h1 class="text-[24px] font-extrabold tracking-tight text-black">Configurações</h1>
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="closeSettingsModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-zinc-200/70 active:scale-90 transition" aria-label="Voltar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#18181B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="h-5 w-[1px] bg-zinc-300"></div>
+        <div class="w-9 h-9 flex items-center justify-center text-zinc-600">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto px-4 pb-24 space-y-2.5 no-scrollbar">
+      <div class="bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#6B7DB3] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-[15px] font-bold text-black leading-tight">Notificações</p>
+            <p class="text-[12px] text-[#71717A] mt-0.5">Ativar • Desativar</p>
+          </div>
+        </div>
+        <button type="button" id="toggle-notifications" onclick="toggleSettingSwitch('notifications')" aria-label="Alternar notificações" class="w-12 h-7 rounded-full bg-[#2563EB] p-0.5 transition-colors flex items-center justify-end">
+          <span class="w-6 h-6 rounded-full bg-white shadow-sm block"></span>
+        </button>
+      </div>
+
+      <div class="bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#5B7290] flex items-center justify-center text-white shrink-0">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-[15px] font-bold text-black leading-tight">Conta privada • pública</p>
+            <p class="text-[12px] text-[#71717A] mt-0.5">Privada • Pública</p>
+          </div>
+        </div>
+        <button type="button" id="toggle-private-account" onclick="toggleSettingSwitch('privateAccount')" aria-label="Alternar privacidade da conta" class="w-12 h-7 rounded-full bg-[#2563EB] p-0.5 transition-colors flex items-center justify-end">
+          <span class="w-6 h-6 rounded-full bg-white shadow-sm block"></span>
+        </button>
+      </div>
+
+      <button type="button" onclick="openToast('Idioma atual: Português (Brasil)')" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#4A7CD6] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Idioma</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="openToast(`Você tem ${store.posts.length} publicação(ões) no Koneat`)" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#6866B3] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Ver minhas atividades</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="closeSettingsModal(); openEditProfileModal();" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#4D648D] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Informações da conta</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="openInfoSheet('Privacidade')" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#7A56B8] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Privacidade</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="openInfoSheet('Termos')" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#3A8FB7] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="8" y1="13" x2="16" y2="13"></line>
+              <line x1="8" y1="17" x2="13" y2="17"></line>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Termos</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="confirmResetAccount()" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#DC4C46] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-[#DC4C46]">Deletar conta</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <button type="button" onclick="openInfoSheet('Ajuda')" class="w-full bg-white rounded-2xl px-4 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] flex items-center justify-between active:scale-[0.99] transition text-left">
+        <div class="flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-full bg-[#536D9E] flex items-center justify-center text-white shrink-0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <span class="text-[15px] font-bold text-black">Ajuda</span>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <div class="fixed bottom-5 right-5 z-[72] max-w-[480px]">
+      <button type="button" onclick="saveSettingsChanges()" class="bg-[#0B57D0] hover:bg-[#0842A0] active:scale-95 text-white text-[13px] font-bold px-5 py-2.5 rounded-full shadow-lg transition">
+        Salvar alterações
+      </button>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       7. TELA SOBREPOSTA: EDITAR PERFIL
+       ======================================================================= -->
+  <div id="edit-profile-modal" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[70] bg-white text-black flex flex-col overflow-hidden">
+    <header class="px-4 h-14 flex items-center justify-between border-b border-[#EFEFEF] shrink-0">
+      <button type="button" onclick="closeEditProfileModal()" class="w-9 h-9 flex items-center justify-center text-black hover:bg-zinc-100 rounded-full transition" aria-label="Fechar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <h2 class="text-[16px] font-bold text-black">Editar perfil</h2>
+
+      <button type="button" onclick="saveEditedProfile()" class="bg-black hover:bg-zinc-800 active:scale-95 text-white text-[13px] font-bold px-5 py-2 rounded-full transition">
+        Salvar
+      </button>
+    </header>
+
+    <div class="flex-1 overflow-y-auto px-4 pb-10 no-scrollbar">
+      <div class="py-6 flex flex-col items-center">
+        <div onclick="triggerAvatarUpload()" class="relative w-[92px] h-[92px] rounded-full bg-[#F1F3F5] overflow-hidden cursor-pointer flex items-center justify-center">
+          <svg id="edit-avatar-silhouette" class="w-full h-full" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <defs>
+              <clipPath id="above-camera-bar">
+                <rect x="0" y="0" width="100" height="70"></rect>
+              </clipPath>
+            </defs>
+            <g clip-path="url(#above-camera-bar)">
+              <circle cx="50" cy="29" r="14.5" fill="#8E959E"></circle>
+              <circle cx="50" cy="81.5" r="32" fill="#8E959E"></circle>
+            </g>
+          </svg>
+          <img id="edit-avatar-preview" src="" alt="" class="hidden w-full h-full object-cover" />
+          <div class="absolute bottom-0 inset-x-0 h-[28px] bg-black/45 flex items-center justify-center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+        </div>
+        <button type="button" onclick="triggerAvatarUpload()" class="mt-2.5 text-[13px] font-semibold text-black hover:underline">
+          Adicionar ou alterar foto
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="bg-[#F4F6F9] rounded-2xl px-4 py-3">
+          <label class="block text-[12px] font-bold text-black mb-1">Nome</label>
+          <input id="input-edit-name" type="text" placeholder="Escreva seu nome..." class="w-full bg-transparent text-[14px] text-black placeholder-[#94A3B8] outline-none" />
+        </div>
+
+        <div class="bg-[#F4F6F9] rounded-2xl px-4 py-3">
+          <label class="block text-[12px] font-bold text-black mb-1">Nome de usuário</label>
+          <input id="input-edit-handle" type="text" placeholder="Escreva seu nome..." class="w-full bg-transparent text-[14px] text-black placeholder-[#94A3B8] outline-none" />
+        </div>
+
+        <div class="bg-[#F4F6F9] rounded-2xl px-4 py-3">
+          <label class="block text-[12px] font-bold text-black mb-1">Sobre mim</label>
+          <textarea id="input-edit-bio" rows="2" placeholder="Escreva algo sobre você..." class="w-full bg-transparent text-[14px] text-black placeholder-[#94A3B8] outline-none resize-none"></textarea>
+        </div>
+
+        <div class="bg-[#F4F6F9] rounded-2xl px-4 py-3">
+          <label class="block text-[12px] font-bold text-black mb-1">Data de nascimento</label>
+          <input id="input-edit-birth" type="text" placeholder="DD/MM/AAAA" class="w-full bg-transparent text-[14px] text-black placeholder-[#94A3B8] outline-none" />
+          <p class="text-[11px] text-[#64748B] mt-1">Somente você pode ver isso</p>
+        </div>
+
+        <div class="bg-[#F4F6F9] rounded-2xl px-4 py-3">
+          <label class="block text-[12px] font-bold text-black mb-1">Gênero</label>
+          <input id="input-edit-gender" type="text" placeholder="Masculino ou feminino" class="w-full bg-transparent text-[14px] text-black placeholder-[#94A3B8] outline-none" />
+          <p class="text-[11px] text-[#64748B] mt-1">Somente você pode ver isso</p>
+        </div>
+      </div>
+
+      <div class="mt-5 divide-y divide-[#EFEFEF] border-t border-b border-[#EFEFEF]">
+        <button type="button" onclick="openToast('Configurar contato')" class="w-full py-3.5 flex items-center justify-between text-left">
+          <span class="text-[14px] font-medium text-black">Contato</span>
+          <div class="flex items-center gap-2 text-[#94A3B8]">
+            <span class="text-[14px]">0</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </button>
+
+        <button type="button" onclick="openToast('Adicionar link externo')" class="w-full py-3.5 flex items-center justify-between text-left">
+          <span class="text-[14px] font-medium text-black">Link</span>
+          <div class="flex items-center gap-2 text-[#94A3B8]">
+            <span class="text-[14px]">0</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </button>
+
+        <button type="button" onclick="openToast('Definir localização')" class="w-full py-3.5 flex items-center justify-between text-left">
+          <span class="text-[14px] font-medium text-black">Localização</span>
+          <div class="flex items-center gap-2 text-[#94A3B8]">
+            <span class="text-[14px]">0</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </button>
+
+        <button type="button" onclick="openToast('Informações pessoais protegidas')" class="w-full py-3.5 flex items-center justify-between text-left">
+          <span class="text-[14px] font-medium text-black">Configurações de informações pessoais</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3B8" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       8. BOTTOM SHEET: COMPARTILHAR PERFIL
+       ======================================================================= -->
+  <div id="share-sheet-backdrop" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[75] bg-black/55 flex items-end" onclick="closeShareSheet()">
+    <div class="w-full bg-white text-black rounded-t-[26px] pt-4 pb-6 px-4 animate-sheet-up shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3.5 pb-4 border-b border-[#EFEFEF]">
+        <div class="w-12 h-12 rounded-xl border border-zinc-200 bg-white flex items-center justify-center shrink-0">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3F3F46" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[14px] font-semibold text-black truncate">Confira meu perfil no Koneat!</p>
+          <p id="share-profile-url" class="text-[13px] text-[#71717A] truncate">microprojeto.github.io</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 py-4 border-b border-[#EFEFEF] text-center">
+        <button type="button" onclick="shareViaApp('Gmail')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F8FAFC] border border-zinc-100 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="#EA4335" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4.2-8 5-8-5V6l8 5 8-5v2.2z"/>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium">Gmail</span>
+        </button>
+
+        <button type="button" onclick="shareViaApp('Mensagens')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#EFF6FF] flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#2563EB">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium">Mensagens</span>
+        </button>
+
+        <button type="button" onclick="shareViaApp('Conversas')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#EFF6FF] flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#0084FF">
+              <path d="M12 2C6.48 2 2 6.15 2 11.27c0 2.91 1.45 5.51 3.72 7.21V22l3.4-1.87c.91.25 1.88.39 2.88.39 5.52 0 10-4.15 10-9.27S17.52 2 12 2zm1 12.46-2.55-2.72-4.97 2.72 5.47-5.81 2.61 2.72 4.91-2.72-5.47 5.81z"/>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium">Conversas</span>
+        </button>
+
+        <button type="button" onclick="shareViaApp('Mais')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F4F4F5] flex items-center justify-center text-black">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="5" cy="12" r="2"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+              <circle cx="19" cy="12" r="2"></circle>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium">Mais</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 pt-4 text-center">
+        <button type="button" onclick="copyShareLink()" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F4F4F5] flex items-center justify-center text-black">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium leading-tight">Copiar</span>
+        </button>
+
+        <button type="button" onclick="closeShareSheet(); openToast('Captura de tela do perfil salva!')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F4F4F5] flex items-center justify-center text-black">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium leading-tight">Captura de tela...</span>
+        </button>
+
+        <button type="button" onclick="closeShareSheet(); openToast('Guia enviada para seus dispositivos')" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F4F4F5] flex items-center justify-center text-black">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium leading-tight">Enviar a guia...</span>
+        </button>
+
+        <button type="button" onclick="openQrCodePreview()" class="flex flex-col items-center gap-1.5 active:scale-95 transition">
+          <div class="w-12 h-12 rounded-2xl bg-[#F4F4F5] flex items-center justify-center text-black">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+              <path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h2"></path>
+            </svg>
+          </div>
+          <span class="text-[11px] text-zinc-700 font-medium leading-tight">Código QR</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal QR Code do Perfil -->
+  <div id="qr-modal" class="hidden fixed inset-0 z-[80] bg-black/70 flex items-center justify-center p-5" onclick="document.getElementById('qr-modal').classList.add('hidden')">
+    <div class="bg-white text-black rounded-3xl p-6 max-w-[300px] w-full text-center shadow-2xl" onclick="event.stopPropagation()">
+      <h3 class="font-extrabold text-base mb-1">QR Code Koneat</h3>
+      <p id="qr-handle-text" class="text-xs text-zinc-500 mb-4">microprojeto.github.io</p>
+      <div class="w-44 h-44 mx-auto bg-white border-2 border-black rounded-2xl p-3 flex items-center justify-center">
+        <svg viewBox="0 0 100 100" class="w-full h-full fill-black">
+          <rect x="5" y="5" width="28" height="28" rx="4" fill="none" stroke="#000" stroke-width="6"/>
+          <rect x="13" y="13" width="12" height="12"/>
+          <rect x="67" y="5" width="28" height="28" rx="4" fill="none" stroke="#000" stroke-width="6"/>
+          <rect x="75" y="13" width="12" height="12"/>
+          <rect x="5" y="67" width="28" height="28" rx="4" fill="none" stroke="#000" stroke-width="6"/>
+          <rect x="13" y="75" width="12" height="12"/>
+          <rect x="42" y="10" width="8" height="8"/><rect x="52" y="18" width="8" height="16"/>
+          <rect x="10" y="42" width="16" height="8"/><rect x="34" y="42" width="14" height="14"/>
+          <rect x="56" y="44" width="10" height="10"/><rect x="74" y="42" width="18" height="8"/>
+          <rect x="44" y="66" width="12" height="12"/><rect x="66" y="66" width="10" height="24"/>
+          <rect x="82" y="74" width="12" height="16"/>
+        </svg>
+      </div>
+      <button type="button" onclick="document.getElementById('qr-modal').classList.add('hidden')" class="mt-5 w-full bg-black text-white font-bold text-xs py-2.5 rounded-full">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Folha Informativa -->
+  <div id="info-sheet-modal" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[80] bg-black/60 flex items-end" onclick="closeInfoSheet()">
+    <div class="w-full bg-white text-black rounded-t-3xl p-5 max-h-[75dvh] flex flex-col animate-sheet-up" onclick="event.stopPropagation()">
+      <div class="w-10 h-1 bg-zinc-300 rounded-full mx-auto mb-3"></div>
+      <div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+        <h3 id="info-sheet-title" class="font-extrabold text-base text-black">Privacidade</h3>
+        <button type="button" onclick="closeInfoSheet()" class="text-xs font-bold text-zinc-500 px-2 py-1">Fechar</button>
+      </div>
+      <div id="info-sheet-body" class="py-4 overflow-y-auto text-[13px] text-zinc-700 leading-relaxed space-y-3 no-scrollbar"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Comentários -->
+  <div id="comments-modal" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[75] bg-black/60 flex items-end" onclick="closeCommentsModal()">
+    <div class="w-full bg-white text-black rounded-t-3xl p-4 max-h-[72dvh] flex flex-col animate-sheet-up" onclick="event.stopPropagation()">
+      <div class="w-10 h-1 bg-zinc-300 rounded-full mx-auto mb-3"></div>
+      <div class="flex items-center justify-between pb-2.5 border-b border-zinc-100">
+        <h3 class="font-bold text-sm">Comentários</h3>
+        <button type="button" onclick="closeCommentsModal()" class="text-xs font-semibold text-zinc-500">Fechar</button>
+      </div>
+      <div id="comments-list" class="flex-1 overflow-y-auto py-3 space-y-3 min-h-[150px] no-scrollbar"></div>
+      <form onsubmit="submitComment(event)" class="pt-2 border-t border-zinc-100 flex items-center gap-2">
+        <input id="comment-input" type="text" placeholder="Adicione um comentário..." class="flex-1 bg-[#F4F6F9] rounded-full px-4 py-2 text-xs text-black outline-none" />
+        <button type="submit" class="bg-black text-white font-bold text-xs px-4 py-2 rounded-full">Enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Visualizador de Story -->
+  <div id="story-viewer" class="hidden fixed inset-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[80] bg-black text-white flex flex-col justify-between">
+    <div class="p-4 pt-6 bg-gradient-to-b from-black/70 to-transparent z-10">
+      <div class="h-1 w-full bg-white/30 rounded-full overflow-hidden mb-3">
+        <div id="story-progress-bar" class="h-full bg-white w-0 transition-all duration-100 linear"></div>
+      </div>
+      <div class="flex items-center justify-between">
+        <span id="story-view-user" class="text-xs font-bold">@usuario</span>
+        <button type="button" onclick="closeStoryViewer()" class="text-white text-sm px-2">✕</button>
+      </div>
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <img id="story-view-img" class="hidden w-full h-full object-contain" alt="Story" />
+      <video id="story-view-video" class="hidden w-full h-full object-contain" playsinline></video>
+    </div>
+    <div class="p-4 bg-gradient-to-t from-black/80 to-transparent z-10">
+      <p id="story-view-caption" class="text-xs text-white"></p>
+    </div>
+  </div>
+
+  <!-- Toast Flutuante Não-Bloqueante -->
+  <div id="toast-box" class="pointer-events-none fixed top-14 left-1/2 -translate-x-1/2 z-[90] transition-all duration-200 opacity-0 -translate-y-2">
+    <div class="bg-zinc-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg whitespace-nowrap">
+      <span id="toast-text">Aviso</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
